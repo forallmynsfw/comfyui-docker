@@ -8,8 +8,8 @@ ARG CUDNN_VERSION=9
 FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-runtime
 
 # Defines build arguments for the versions of ComfyUI and ComfyUI Manager to use
-ARG COMFYUI_VERSION=0.8.2
-ARG COMFYUI_MANAGER_VERSION=4.0.5
+ARG COMFYUI_VERSION=0.20.1
+ARG COMFYUI_MANAGER_VERSION=4.2.1
 
 # Installs Git, because ComfyUI and the ComfyUI Manager are installed by cloning their respective Git repositories
 RUN apt-get update --assume-yes && \
