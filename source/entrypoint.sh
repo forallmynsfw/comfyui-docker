@@ -26,13 +26,6 @@ for MODEL_DIRECTORY in ${MODEL_DIRECTORIES[@]}; do
     mkdir -p /opt/comfyui/models/$MODEL_DIRECTORY
 done
 
-# Creates the symlink for the ComfyUI Manager to the custom nodes directory, which is also mounted from the host
-echo "Creating symlink for ComfyUI Manager..."
-rm --force /opt/comfyui/custom_nodes/ComfyUI-Manager
-ln -s \
-    /opt/comfyui-manager/comfyui_manager \
-    /opt/comfyui/custom_nodes/ComfyUI-Manager
-
 # The custom nodes that were installed using the ComfyUI Manager may have requirements of their own, which are not installed when the container is
 # started for the first time; this loops over all custom nodes and installs the requirements of each custom node
 echo "Installing requirements for custom nodes..."
@@ -63,6 +56,7 @@ if [ -z "$USER_ID" ] || [ -z "$GROUP_ID" ];
 then
     echo "Running container as $USER..."
     exec /opt/conda/bin/python main.py \
+        --enable-manager \
         --port 8188 \
         --listen 0.0.0.0 \
         --disable-auto-launch \
@@ -78,6 +72,7 @@ else
     echo "Running container as comfyui-user ($USER_ID:$GROUP_ID)..."
     sudo --set-home --preserve-env=PATH --user \#$USER_ID \
         /opt/conda/bin/python main.py \
+            --enable-manager
             --port 8188 \
             --listen 0.0.0.0 \
             --disable-auto-launch \
