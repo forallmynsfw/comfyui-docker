@@ -17,14 +17,13 @@ RUN apt-get update --assume-yes && \
         sudo \
         libgl1-mesa-glx \
         libglib2.0-0 && \
-        wget \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install triton and sageattention
 RUN pip install triton
 RUN mkdir /opt/sageattention && \
     cd /opt/sageattention && \
-    wget https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl?download=true && \
+    curl -O https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl?download=true && \
     pip install wheel && \
     pip install /opt/sageattention/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl
 # 40X0 cards
