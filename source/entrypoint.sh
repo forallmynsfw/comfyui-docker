@@ -31,15 +31,16 @@ done
 echo "Installing requirements for custom nodes..."
 for CUSTOM_NODE_DIRECTORY in /opt/comfyui/custom_nodes/*;
 do
-    if [ "$CUSTOM_NODE_DIRECTORY" != "/opt/comfyui/custom_nodes/ComfyUI-Manager" ];
+    if [ -f "$CUSTOM_NODE_DIRECTORY/requirements.txt" ];
     then
-        if [ -f "$CUSTOM_NODE_DIRECTORY/requirements.txt" ];
-        then
-            CUSTOM_NODE_NAME=${CUSTOM_NODE_DIRECTORY##*/}
-            CUSTOM_NODE_NAME=${CUSTOM_NODE_NAME//[-_]/ }
-            echo "Installing requirements for $CUSTOM_NODE_NAME..."
-            pip install --requirement "$CUSTOM_NODE_DIRECTORY/requirements.txt"
-        fi
+        CUSTOM_NODE_NAME=${CUSTOM_NODE_DIRECTORY##*/}
+        CUSTOM_NODE_NAME=${CUSTOM_NODE_NAME//[-_]/ }
+        echo "Installing requirements for $CUSTOM_NODE_NAME..."
+        pip install --requirement "$CUSTOM_NODE_DIRECTORY/requirements.txt"
+    fi
+    if [ -f "$CUSTOM_NODE_DIRECTORY/install.py" ];
+    then
+        python "$CUSTOM_NODE_DIRECTORY/install.py"
     fi
 done
 
@@ -66,7 +67,6 @@ else
     getent group $GROUP_ID > /dev/null 2>&1 || groupadd --gid $GROUP_ID comfyui-user
     id -u $USER_ID > /dev/null 2>&1 || useradd --uid $USER_ID --gid $GROUP_ID --create-home comfyui-user
     chown --recursive $USER_ID:$GROUP_ID /opt/comfyui
-    chown --recursive $USER_ID:$GROUP_ID /opt/comfyui-manager
     export PATH=$PATH:/home/comfyui-user/.local/bin
 
     echo "Running container as comfyui-user ($USER_ID:$GROUP_ID)..."
