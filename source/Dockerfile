@@ -17,7 +17,8 @@ RUN apt-get update --assume-yes && \
         sudo \
         libgl1-mesa-glx \
         libglib2.0-0 \
-        curl && \
+        curl \
+        clang && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install triton and sageattention
