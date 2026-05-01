@@ -19,6 +19,12 @@ RUN apt-get update --assume-yes && \
         libglib2.0-0 && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
+# Install triton and sageattention
+RUN pip install triton
+RUN git clone https://github.com/thu-ml/SageAttention.git /opt/SageAttention && \
+    cd /opt/SageAttention && \
+    python setup.py install
+
 # Clones the ComfyUI repository and checks out the latest release
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git /opt/comfyui && \
     cd /opt/comfyui && \
