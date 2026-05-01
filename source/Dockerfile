@@ -3,8 +3,6 @@
 ARG PYTORCH_VERSION=2.9.1
 ARG CUDA_VERSION=12.8
 ARG CUDNN_VERSION=9
-# 40X0 cards
-ARG TORCH_CUDA_ARCH_LIST="sm_89"
 
 # This image is based on the latest official PyTorch image, because it already contains CUDA, CuDNN, and PyTorch
 FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel
@@ -23,6 +21,8 @@ RUN apt-get update --assume-yes && \
 
 # Install triton and sageattention
 RUN pip install triton
+# 40X0 cards
+ARG TORCH_CUDA_ARCH_LIST="sm_89"
 RUN git clone https://github.com/thu-ml/SageAttention.git /opt/SageAttention && \
     cd /opt/SageAttention && \
     python setup.py install
