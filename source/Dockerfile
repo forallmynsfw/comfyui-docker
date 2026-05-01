@@ -20,6 +20,7 @@ RUN apt-get update --assume-yes && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install triton and sageattention
+RUN export TORCH_CUDA_ARCH_LIST="sm_89"
 RUN pip install triton
 RUN git clone https://github.com/thu-ml/SageAttention.git /opt/SageAttention && \
     cd /opt/SageAttention && \
