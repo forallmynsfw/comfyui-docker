@@ -1,11 +1,11 @@
 
 # Defines build arguments for the versions of PyTorch, CUDA, and cuDNN to use
-ARG PYTORCH_VERSION=2.9.1
-ARG CUDA_VERSION=12.8
+ARG PYTORCH_VERSION=2.11.0
+ARG CUDA_VERSION=13.0
 ARG CUDNN_VERSION=9
 
 # This image is based on the latest official PyTorch image, because it already contains CUDA, CuDNN, and PyTorch
-FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel
+FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-runtime
 
 # Defines build arguments for the versions of ComfyUI and ComfyUI Manager to use
 ARG COMFYUI_VERSION=0.20.1
@@ -23,11 +23,6 @@ RUN apt-get update --assume-yes && \
 # Install triton and sageattention
 RUN pip install triton
 RUN pip install sageattention
-# 40X0 cards
-# ARG TORCH_CUDA_ARCH_LIST="sm_89"
-# RUN git clone https://github.com/thu-ml/SageAttention.git /opt/SageAttention && \
-#    cd /opt/SageAttention && \
-#    python setup.py install
 
 # Clones the ComfyUI repository and checks out the latest release
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git /opt/comfyui && \
