@@ -30,7 +30,7 @@ done
 echo "Creating symlink for ComfyUI Manager..."
 rm --force /opt/comfyui/custom_nodes/ComfyUI-Manager
 ln -s \
-    /opt/comfyui-manager \
+    /opt/comfyui-manager/comfyui_manager \
     /opt/comfyui/custom_nodes/ComfyUI-Manager
 
 # The custom nodes that were installed using the ComfyUI Manager may have requirements of their own, which are not installed when the container is
