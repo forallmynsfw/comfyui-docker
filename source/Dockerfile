@@ -5,7 +5,7 @@ ARG CUDA_VERSION=12.8
 ARG CUDNN_VERSION=9
 
 # This image is based on the latest official PyTorch image, because it already contains CUDA, CuDNN, and PyTorch
-FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-runtime
+FROM pytorch/pytorch:${PYTORCH_VERSION}-cuda${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel
 
 # Defines build arguments for the versions of ComfyUI and ComfyUI Manager to use
 ARG COMFYUI_VERSION=0.20.1
